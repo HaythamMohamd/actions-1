@@ -16,7 +16,7 @@
        run: ls
 
      - name: install cosway
-       run: apt-get insatll cowsay -y 
+       run: sudo apt-get insatll cowsay -y 
 
      - name: generate ASCII artwork
        run: cowsay -f dargon "Run for cover, I am a dragon ... RARW" >> dragon.txt
