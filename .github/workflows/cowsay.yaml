@@ -22,11 +22,4 @@ jobs:
       run: cowsay -f dargon "Run for cover, I am a dragon ... RARW" >> dragon.txt
 
     - name: read file
-      run: cat README.md
-
-    - name: using multi commands
-      run: |
-        echo "first command"
-        ls -ltra 
-        cat README.md 
-
+      run: cat dragon.txt
