@@ -18,4 +18,11 @@
      - name: read file
        run: cat README.md
 
-     
+     - name: using multi commands
+       run: |
+         echo "first command"
+         ls -ltra 
+         cat README.md 
+
+     - name: generate ASCII artwork
+       run: cowsay -f dargon "Run for cover, I am a dragon ... RARW" >> dragon.txt
