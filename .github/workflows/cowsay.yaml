@@ -1,4 +1,4 @@
-name: cosway
+name: cosway with shell script
 
 on: push
 
@@ -15,11 +15,15 @@ jobs:
     - name: list files
       run: ls
 
-    - name: install cosway
-      run: sudo apt-get install cowsay -y
+    - name: executing the cowsay script
+      run: |
+        chmod o+x cowsay.sh
+        ./cowsay.sh
+    # - name: install cosway
+    #   run: sudo apt-get install cowsay -y
 
-    - name: generate ASCII artwork
-      run: cowsay -f dargon "Run for cover, I am a dragon ... RARW" >> dragon.txt
+    # - name: generate ASCII artwork
+    #   run: cowsay -f dargon "Run for cover, I am a dragon ... RARW" >> dragon.txt
 
-    - name: read file
-      run: cat dragon.txt
+    # - name: read file
+    #   run: cat dragon.txt
