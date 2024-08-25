@@ -8,7 +8,10 @@
      steps:
      - name: welcome message
        run: echo "my first github actions job"
-    
+     
+     - name: clone the repo
+       uses: actions/checkout@v4
+
      - name: list files
        run: ls
 
