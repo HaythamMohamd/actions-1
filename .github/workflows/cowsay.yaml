@@ -17,7 +17,7 @@ jobs:
 
     - name: executing the cowsay script
       run: |
-        chmod o+x cowsay.sh
+        chmod +x cowsay.sh
         ./cowsay.sh
     # - name: install cosway
     #   run: sudo apt-get install cowsay -y
