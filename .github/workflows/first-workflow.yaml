@@ -15,6 +15,12 @@
      - name: list files
        run: ls
 
+     - name: install cosway
+       run: apt-get cowsay -y 
+
+     - name: generate ASCII artwork
+       run: cowsay -f dargon "Run for cover, I am a dragon ... RARW" >> dragon.txt
+
      - name: read file
        run: cat README.md
 
@@ -24,5 +30,3 @@
          ls -ltra 
          cat README.md 
 
-     - name: generate ASCII artwork
-       run: cowsay -f dargon "Run for cover, I am a dragon ... RARW" >> dragon.txt
