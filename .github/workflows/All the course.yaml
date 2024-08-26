@@ -244,7 +244,7 @@ jobs:
       run: docker info
 
     - name: Run images
-      run: docker run hello world
+      run: docker run hello-world
 
   deploy_on_windows:
     runs-on: windows-latest
@@ -253,4 +253,4 @@ jobs:
       run: docker info
 
     - name: Run images
-      run: docker run hello world
+      run: docker run hello-world
