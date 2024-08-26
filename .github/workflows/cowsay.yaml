@@ -43,6 +43,9 @@ jobs:
     - name: generate ASCII artwork
       run: cowsay -f dargon "Run for cover, I am a dragon ... RARW" >> dragon.txt
 
+    - name: read file
+      run: cat dragon.txt
+
     - name: sleep for 30 sec
       run: sleep 30
 
