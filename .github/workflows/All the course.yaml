@@ -276,8 +276,7 @@
 
 ################################################## 07- with Matrix with include and exclude ##################################################
 
-name: name: Matrix config with include and exclude
-
+name: Matrix config with include and exclude
 
 on: push
 jobs:
