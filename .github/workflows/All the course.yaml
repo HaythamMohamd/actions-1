@@ -122,9 +122,10 @@
 name: Exploring variables and secrets
 
 # on: push
-on:
-  schedule:
-    - cron: "*/1 * * * *" ## ever 1 min
+on: 
+  workflow_dispatch
+  # schedule:
+  #   - cron: "*/1 * * * *" ## ever 1 min
 
 env:
     CONTAINER_REGISTERY: docker.io
