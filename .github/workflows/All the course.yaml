@@ -233,27 +233,27 @@
 
 ################################################## 05- without Matrix config ##################################################
 
-name: Matrix config
+# name: Matrix config
 
-on: push
-jobs:
-  deploy_on_ubuntu:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Echo docker detatils 
-      run: docker info
+# on: push
+# jobs:
+#   deploy_on_ubuntu:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: Echo docker detatils 
+#       run: docker info
 
-    - name: Run images
-      run: docker run hello-world
+#     - name: Run images
+#       run: docker run hello-world
 
-  deploy_on_windows:
-    runs-on: windows-latest
-    steps:
-    - name: Echo docker detatils 
-      run: docker info
+#   deploy_on_windows:
+#     runs-on: windows-latest
+#     steps:
+#     - name: Echo docker detatils 
+#       run: docker info
 
-    - name: Run images
-      run: docker run hello-world
+#     - name: Run images
+#       run: docker run hello-world
 
 ################################################## 06- with Matrix config ##################################################
 
