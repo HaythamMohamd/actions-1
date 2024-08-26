@@ -257,19 +257,47 @@
 
 ################################################## 06- with Matrix config ##################################################
 
-name: Matrix config
+# name: Matrix config
+
+# on: push
+# jobs:
+#   deploy:
+#     strategy:
+#       matrix:
+#         os: [ubuntu-latest,ubuntu-20.04, windows-latest]
+#         images: [hello-world, alpine]
+#     runs-on: ${{ matrix.os }}
+#     steps:
+#     - name: Echo docker detatils 
+#       run: docker info
+
+#     - name: Run images on ${{ matrix.os }}
+#       run: docker run ${{ matrix.images }}
+
+################################################## 07- with Matrix with include and exclude ##################################################
+
+name: name: Matrix config with include and exclude
+
 
 on: push
 jobs:
-  deploy_on_ubuntu:
+  deploy:
     strategy:
+      fail-fast: false
+      max-parallel: 2
       matrix:
-        os: [ubuntu-latest,ubuntu-20.04, windows-latest]
+        os: [ubuntu-latest, ubuntu-20.04, windows-latest]
         images: [hello-world, alpine]
+        exclude:
+          - images: alpine
+            os: windows-latest
+        include:
+          - images: amd64/apine
+            os: ubuntu-20.04
     runs-on: ${{ matrix.os }}
     steps:
     - name: Echo docker detatils 
       run: docker info
 
-    - name: Run images
+    - name: Run images on ${{ matrix.os }}
       run: docker run ${{ matrix.images }}
