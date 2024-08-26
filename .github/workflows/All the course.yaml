@@ -301,9 +301,9 @@
 #     - name: Run images on ${{ matrix.os }}
 #       run: docker run ${{ matrix.images }}
 
-################################################## 08- gitub_job_steps_runner context ##################################################
+################################################## 08- gitub_job_steps_runner_secrets context ##################################################
 
-name: Context of gitub_job_steps_runner 
+name: Context of gitub_job_steps_runner_secrets 
 
 on: push
 jobs:
@@ -327,3 +327,7 @@ jobs:
       env:
         RUNNER_CONTEXT: ${{ toJson(runner) }}
       run: echo "$RUNNER_CONTEXT"
+    - name: Dumb secrets context
+      env:
+        SECRETS_CONTEXT: ${{ toJson(secrets) }}
+      run: echo "$SECRETS_CONTEXT"
