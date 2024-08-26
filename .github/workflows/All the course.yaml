@@ -192,7 +192,7 @@
 #         echo docker run -d -p 8080:80 $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
 #         sleep 600
 
-################################################## 04- Job concurrency false and timeout 1 min ##################################################
+################################################## 04- Job concurrency false and timeout-minutes 1min ##################################################
 
 name: Job concurrency
 
@@ -226,7 +226,7 @@ jobs:
     steps:
 
     - name: docker run
-      timeout: 1 m
+      timeout-minutes: 1
       run: | 
         echo docker run -d -p 8080:80 $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
         sleep 6000
