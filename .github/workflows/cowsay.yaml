@@ -29,7 +29,7 @@
     #   run: cat dragon.txt
 
 ################################################## needs ##################################################
-name: cosway with shell script
+name: cosway with needs then uplaod and download
 
 on: push
 
@@ -46,6 +46,12 @@ jobs:
     - name: read file
       run: cat dragon.txt
 
+    - name: upload the dragon.tx file to be downloaded after that from other jobs
+      uses: actions/upload-artifact@v3
+      with:
+        name: dragon-text-file
+        path: dragon.txt
+
     - name: sleep for 30 sec
       run: sleep 30
 
@@ -56,6 +62,11 @@ jobs:
 
     - name: sleep for 30 sec
       run: sleep 30
+
+    - name: download  the dragon.tx file to cat it
+      uses: actions/download-artifact@v3
+      with:
+        name: dragon-text-file
 
     - name: test file exists
       run: grep -i "dragon" dragon.txt
