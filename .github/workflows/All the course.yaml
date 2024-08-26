@@ -231,7 +231,7 @@
 #         echo docker run -d -p 8080:80 $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
 #         sleep 6000
 
-################################################## 05- Matrix config ##################################################
+################################################## 05- without Matrix config ##################################################
 
 name: Matrix config
 
@@ -254,3 +254,22 @@ jobs:
 
     - name: Run images
       run: docker run hello-world
+
+################################################## 06- with Matrix config ##################################################
+
+name: Matrix config
+
+on: push
+jobs:
+  deploy_on_ubuntu:
+    strategy:
+      Matrix:
+        os: [ubuntu-latest,ubuntu-20.04, windows-latest]
+        images: [hello-world, alpine]
+    runs-on: ${{ Matrix.os }}
+    steps:
+    - name: Echo docker detatils 
+      run: docker info
+
+    - name: Run images
+      run: docker run ${{ Matrix.images }}
