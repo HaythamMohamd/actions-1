@@ -334,10 +334,62 @@
 
 ################################################## 09- if expression ##################################################
 
-name: Exploring variables and secrets
+# name: if expression in deploy job
 
-on: push
+# on: push
 
+
+# env:
+#     CONTAINER_REGISTERY: docker.io
+#     IMAGE_NAME: github-actions
+
+# jobs:
+#   docker:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: docker build 
+#       run: echo docker build -t ${{ env.CONTAINER_REGISTERY }}/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+
+#     - name: docker login
+#       # env:
+#       #   DOCKER_PASSWORD: 
+#       run: echo docker login --username=$${{ vars.DOCKER_USERNAME }} --pasword=${{ secrets.DOCKER_PASSWORD}}
+
+#     - name: docker publish
+#       run: echo docker push $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+
+#   deploy:
+#     if: github.ref == 'refs/heads/main'
+#     needs: docker
+#     runs-on: ubuntu-latest
+#     steps:
+
+#     - name: docker run
+#       run: echo docker run -d -p 8080:80 $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+
+################################################## 10- Workflow Event Filters and Activity Types  ##################################################
+
+name: Workflow Event Filters and Activity Types
+
+on: 
+  push:
+    branches:
+      - main
+      - '!feature/*'
+    
+    # branches-ignore:
+    #   - '!feature/*'
+    #   - test/**
+
+  pull_request:
+    types:
+      - opened
+      - closed
+    path_ignore:
+      - README.md
+    
+    branches:
+      - main
 
 env:
     CONTAINER_REGISTERY: docker.io
