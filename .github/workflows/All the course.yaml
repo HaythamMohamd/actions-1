@@ -1,3 +1,25 @@
+################################################## 01 my first workflow ##################################################
+
+name: my first workflow
+
+on: push
+
+jobs:
+  first_job:
+    runs-on: ubuntu-latest
+    steps:
+    - name: welcome message
+      run: echo "my first github actions job"
+
+    - name: list files
+      run: ls
+
+    - name: read the file
+      run: cat README.md
+
+
+################################################## needs ##################################################
+
 # name: cosway with shell script
 
 # on: push
@@ -369,52 +391,52 @@
 
 ################################################## 10- Workflow Event Filters and Activity Types  ##################################################
 
-name: Workflow Event Filters and Activity Types 
+# name: Workflow Event Filters and Activity Types 
 
-on: 
-  push:
-    branches:
-      - main
-      - '!feature/*'
+# on: 
+#   push:
+#     branches:
+#       - main
+#       - '!feature/*'
     
-    # branches-ignore:
-    #   - '!feature/*'
-    #   - test/**
+#     # branches-ignore:
+#     #   - '!feature/*'
+#     #   - test/**
 
-  pull_request:
-    types:
-      - opened
-      - closed
-    path_ignore:
-      - README.md
+#   pull_request:
+#     types:
+#       - opened
+#       - closed
+#     path_ignore:
+#       - README.md
     
-    branches:
-      - main
+#     branches:
+#       - main
 
-env:
-    CONTAINER_REGISTERY: docker.io
-    IMAGE_NAME: github-actions
+# env:
+#     CONTAINER_REGISTERY: docker.io
+#     IMAGE_NAME: github-actions
 
-jobs:
-  docker:
-    runs-on: ubuntu-latest
-    steps:
-    - name: docker build 
-      run: echo docker build -t ${{ env.CONTAINER_REGISTERY }}/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+# jobs:
+#   docker:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: docker build 
+#       run: echo docker build -t ${{ env.CONTAINER_REGISTERY }}/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
 
-    - name: docker login
-      # env:
-      #   DOCKER_PASSWORD: 
-      run: echo docker login --username=$${{ vars.DOCKER_USERNAME }} --pasword=${{ secrets.DOCKER_PASSWORD}}
+#     - name: docker login
+#       # env:
+#       #   DOCKER_PASSWORD: 
+#       run: echo docker login --username=$${{ vars.DOCKER_USERNAME }} --pasword=${{ secrets.DOCKER_PASSWORD}}
 
-    - name: docker publish
-      run: echo docker push $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+#     - name: docker publish
+#       run: echo docker push $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
 
-  deploy:
-    if: github.ref == 'refs/heads/main'
-    needs: docker
-    runs-on: ubuntu-latest
-    steps:
+#   deploy:
+#     if: github.ref == 'refs/heads/main'
+#     needs: docker
+#     runs-on: ubuntu-latest
+#     steps:
 
-    - name: docker run
-      run: echo docker run -d -p 8080:80 $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+#     - name: docker run
+#       run: echo docker run -d -p 8080:80 $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
