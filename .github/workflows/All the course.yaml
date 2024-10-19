@@ -78,7 +78,7 @@ jobs:
       run: sudo apt-get install cowsay  -y
 
     - name: generate ASCII artwork 
-      run: echo "testing" >> dragon.txt
+      run: echo "5ali balak el dragon is here" >> dragon.txt
     
     - name: test files exists
       run: grep -i "dargon"  dragon.txt
