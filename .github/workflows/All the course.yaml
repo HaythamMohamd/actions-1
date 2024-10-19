@@ -104,7 +104,7 @@ jobs:
 
     - name: Executing shell script
       run: |
-        chmod o+x cowsay.sh
+        chmod +x cowsay.sh
         ./cowsay.sh
 ################################################## needs ##################################################
 
