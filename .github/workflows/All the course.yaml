@@ -19,6 +19,28 @@
 
 ################################################## 02 use checkout action ##################################################
 
+# name: my first workflow
+
+# on: push
+
+# jobs:
+#   first_job:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: Checkout Repo
+#       uses: actions/checkout@v4
+
+#     - name: welcome message
+#       run: echo "my first github actions job"
+
+#     - name: list files
+#       run: ls
+
+#     - name: read the file
+#       run: cat README.md
+
+################################################## 03 Multi-Line commands and Executing Third Party Libraries ##################################################
+
 name: my first workflow
 
 on: push
@@ -30,15 +52,14 @@ jobs:
     - name: Checkout Repo
       uses: actions/checkout@v4
 
-    - name: welcome message
-      run: echo "my first github actions job"
+    - name: list files and read files
+      run:  |
+        echo "my first github actions job"
+        ls -lta
+        cat README.md
 
-    - name: list files
-      run: ls
-
-    - name: read the file
-      run: cat README.md
-
+    - name: generate ASCII artwork 
+      run: cowsay -f dargon "Run for cover, I am a dragon ... RARW" >> dragon.txt
 
 ################################################## needs ##################################################
 
