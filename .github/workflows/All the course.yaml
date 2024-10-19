@@ -109,6 +109,44 @@
 
 ################################################## 06 Workflow with multiple Jobs ##################################################
 
+# name: Workflow with multiple Jobs
+
+# on: push
+
+# jobs:
+#   build_job_1:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: install cosway
+#       run: sudo apt-get install cowsay -y
+
+#     - name: generate ASCII artwork
+#       run: cowsay -f dragon "Run for cover, I am a dragon ... RARW" >> dragon.txt
+
+#     - name: sleep for 30 sec
+#       run: sleep 30
+
+#   test_job_2:
+#     runs-on: ubuntu-latest
+#     steps:
+
+#     - name: sleep for 10 sec
+#       run: sleep 10
+
+#     - name: test file exists
+#       run: grep -i "dragon" dragon.txt
+
+#   deploy_job_3:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: read file
+#       run: cat dragon.txt
+
+#     - name: Deploy
+#       run: echo "deploying"
+
+################################################## 07 Workflow with multiple Jobs with needs ##################################################
+
 name: Workflow with multiple Jobs
 
 on: push
@@ -127,9 +165,9 @@ jobs:
       run: sleep 30
 
   test_job_2:
+    needs: build_job_1
     runs-on: ubuntu-latest
     steps:
-
     - name: sleep for 10 sec
       run: sleep 10
 
@@ -137,6 +175,7 @@ jobs:
       run: grep -i "dragon" dragon.txt
 
   deploy_job_3:
+    needs: test_job_2
     runs-on: ubuntu-latest
     steps:
     - name: read file
@@ -144,38 +183,6 @@ jobs:
 
     - name: Deploy
       run: echo "deploying"
-
-################################################## needs ##################################################
-
-# name: cosway with shell script
-
-# on: push
-
-# jobs:
-#   first_job:
-#     runs-on: ubuntu-latest
-#     steps:
-#     - name: welcome message
-#       run: echo "my first github actions job"
-    
-#     - name: clone the repo
-#       uses: actions/checkout@v4
-
-#     - name: list files
-#       run: ls
-
-#     - name: executing the cowsay script
-#       run: |
-#         chmod +x cowsay.sh
-#         ./cowsay.sh
-    # - name: install cosway
-    #   run: sudo apt-get install cowsay -y
-
-    # - name: generate ASCII artwork
-    #   run: cowsay -f dargon "Run for cover, I am a dragon ... RARW" >> dragon.txt
-
-    # - name: read file
-    #   run: cat dragon.txt
 
 ################################################## needs ##################################################
 # name: cosway with needs then uplaod and download
