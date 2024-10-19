@@ -78,7 +78,7 @@ jobs:
       run: sudo apt-get install cowsay  -y
 
     - name: generate ASCII artwork 
-      run: cowsay -f dargon "Run for cover, I am a dragon ... RARW" >> dragon.txt
+      run: echo "testing" >> dragon.txt
     
     - name: test files exists
       run: grep -i "dargon"  dragon.txt
