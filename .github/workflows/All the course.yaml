@@ -63,6 +63,31 @@
 
 ################################################## 04 Workflow to Generate ASCII Artwork ##################################################
 
+# name: my first workflow
+
+# on: push
+
+# jobs:
+#   first_job:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: Checkout Repo
+#       uses: actions/checkout@v4
+
+#     - name: install cosway app
+#       run: sudo apt-get install cowsay  -y
+
+#     - name: generate ASCII artwork 
+#       run: echo "5ali balak el dragon is here" >> dragon.txt
+    
+#     - name: test files exists
+#       run: cat dragon.txt | grep -i dragon
+    
+#     - name: List Repo files
+#       run: ls -ltra
+   
+################################################## 05 Executing Shell Scripts in Workflow ##################################################
+
 name: my first workflow
 
 on: push
@@ -73,20 +98,14 @@ jobs:
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v4
-
-    - name: install cosway app
-      run: sudo apt-get install cowsay  -y
-
-    - name: generate ASCII artwork 
-      run: echo "5ali balak el dragon is here" >> dragon.txt
-    
-    - name: test files exists
-      run: cat dragon.txt | grep -i dragon
     
     - name: List Repo files
       run: ls -ltra
-   
 
+    - name: Executing shell script
+      run: |
+        chmod o+x cowsay.sh
+        ./cowsay.sh
 ################################################## needs ##################################################
 
 # name: cosway with shell script
