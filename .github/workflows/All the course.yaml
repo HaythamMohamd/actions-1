@@ -88,24 +88,63 @@
    
 ################################################## 05 Executing Shell Scripts in Workflow ##################################################
 
-name: my first workflow
+# name: my first workflow
+
+# on: push
+
+# jobs:
+#   first_job:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: Checkout Repo
+#       uses: actions/checkout@v4
+    
+#     - name: List Repo files
+#       run: ls -ltra
+
+#     - name: Executing shell script
+#       run: |
+#         chmod +x cowsay.sh
+#         ./cowsay.sh
+
+################################################## 06 Workflow with multiple Jobs ##################################################
+
+name: Workflow with multiple Jobs
 
 on: push
 
 jobs:
-  first_job:
+  build_job_1:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout Repo
-      uses: actions/checkout@v4
-    
-    - name: List Repo files
-      run: ls -ltra
+    - name: install cosway
+      run: sudo apt-get install cowsay -y
 
-    - name: Executing shell script
-      run: |
-        chmod +x cowsay.sh
-        ./cowsay.sh
+    - name: generate ASCII artwork
+      run: cowsay -f dragon "Run for cover, I am a dragon ... RARW" >> dragon.txt
+
+    - name: sleep for 30 sec
+      run: sleep 30
+
+  test_job_2:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: sleep for 10 sec
+      run: sleep 10
+
+    - name: test file exists
+      run: grep -i "dragon" dragon.txt
+
+  deploy_job_3:
+    runs-on: ubuntu-latest
+    steps:
+    - name: read file
+      run: cat dragon.txt
+
+    - name: Deploy
+      run: echo "deploying"
+
 ################################################## needs ##################################################
 
 # name: cosway with shell script
