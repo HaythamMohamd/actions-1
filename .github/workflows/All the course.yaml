@@ -385,66 +385,66 @@
 
 ################################################## 13- Job concurrency false and timeout-minutes 1min ##################################################
 
-name: Job concurrency and timeout
-
-on: push
-
-env:
-    CONTAINER_REGISTERY: docker.io
-    IMAGE_NAME: github-actions
-
-jobs:
-  docker:
-    runs-on: ubuntu-latest
-    steps:
-    - name: docker build 
-      run: echo docker build -t ${{ env.CONTAINER_REGISTERY }}/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
-
-    - name: docker login
-      # env:
-      #   DOCKER_PASSWORD: 
-      run: echo docker login --username=$${{ vars.DOCKER_USERNAME }} --pasword=${{ secrets.DOCKER_PASSWORD}}
-
-    - name: docker publish
-      run: echo docker push $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
-
-  deploy:
-    needs: docker
-    concurrency:
-      group: production-deployment
-      cancel-in-progress: false  ## dah el default , momken a5leeha false 
-    runs-on: ubuntu-latest
-    steps:
-
-    - name: docker run
-      timeout-minutes: 1
-      run: | 
-        echo docker run -d -p 8080:80 $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
-        sleep 6000
-
-################################################## 05- without Matrix config ##################################################
-
-# name: Matrix config
+# name: Job concurrency and timeout
 
 # on: push
+
+# env:
+#     CONTAINER_REGISTERY: docker.io
+#     IMAGE_NAME: github-actions
+
 # jobs:
-#   deploy_on_ubuntu:
+#   docker:
 #     runs-on: ubuntu-latest
 #     steps:
-#     - name: Echo docker detatils 
-#       run: docker info
+#     - name: docker build 
+#       run: echo docker build -t ${{ env.CONTAINER_REGISTERY }}/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
 
-#     - name: Run images
-#       run: docker run hello-world
+#     - name: docker login
+#       # env:
+#       #   DOCKER_PASSWORD: 
+#       run: echo docker login --username=$${{ vars.DOCKER_USERNAME }} --pasword=${{ secrets.DOCKER_PASSWORD}}
 
-#   deploy_on_windows:
-#     runs-on: windows-latest
+#     - name: docker publish
+#       run: echo docker push $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+
+#   deploy:
+#     needs: docker
+#     concurrency:
+#       group: production-deployment
+#       cancel-in-progress: false  ## dah el default , momken a5leeha false 
+#     runs-on: ubuntu-latest
 #     steps:
-#     - name: Echo docker detatils 
-#       run: docker info
 
-#     - name: Run images
-#       run: docker run hello-world
+#     - name: docker run
+#       timeout-minutes: 1
+#       run: | 
+#         echo docker run -d -p 8080:80 $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+#         sleep 6000
+
+################################################## 14- without Matrix config ##################################################
+# with matrix you will repeat the code 
+name: without Matrix config
+
+on: push
+jobs:
+  deploy_on_ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Echo docker detatils 
+      run: docker info
+
+    - name: Run images
+      run: docker run hello-world
+
+  deploy_on_windows:
+    runs-on: windows-latest
+    steps:
+    - name: Echo docker detatils 
+      run: docker info
+
+    - name: Run images
+      run: docker run hello-world
 
 ################################################## 06- with Matrix config ##################################################
 
