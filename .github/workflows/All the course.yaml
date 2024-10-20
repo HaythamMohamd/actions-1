@@ -248,7 +248,7 @@ on: push
 
 env:
     CONTAINER_REGISTERY: docker.io
-    IMAGE_NAME: github-actions2010
+    IMAGE_NAME: github-actions
 
 jobs:
   docker:
