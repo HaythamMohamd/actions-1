@@ -274,15 +274,48 @@
 #     - name: docker run
 #       run: echo docker run -d -p 8080:80 $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
 
-################################################## 10- schedual , workflow_dispatch ##################################################
+# ################################################## 10- schedual  ##################################################
 
-name: Exploring variables and secrets
+# name: usign schedual 
+
+# # on: push
+# on: 
+#   schedule:
+#     - cron: "*/1 * * * *" ## ever 1 min
+
+# env:
+#     CONTAINER_REGISTERY: docker.io
+#     IMAGE_NAME: github-actions
+
+# jobs:
+#   docker:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: docker build 
+#       run: echo docker build -t ${{ env.CONTAINER_REGISTERY }}/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+
+#     - name: docker login
+#       # env:
+#       #   DOCKER_PASSWORD: 
+#       run: echo docker login --username=$${{ vars.DOCKER_USERNAME }} --pasword=${{ secrets.DOCKER_PASSWORD}}
+
+#     - name: docker publish
+#       run: echo docker push $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+
+#   deploy:
+#     needs: docker
+#     runs-on: ubuntu-latest
+#     steps:
+
+#     - name: docker run
+#       run: echo docker run -d -p 8080:80 $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+################################################## 11- workflow_dispatch  ##################################################
+
+name: workflow_dispatch
 
 # on: push
 on: 
-  #workflow_dispatch
-  schedule:
-    - cron: "*/1 * * * *" ## ever 1 min
+  workflow_dispatch
 
 env:
     CONTAINER_REGISTERY: docker.io
@@ -310,6 +343,7 @@ jobs:
 
     - name: docker run
       run: echo docker run -d -p 8080:80 $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+
 
 ################################################## 04- Job concurrency  ##################################################
 
