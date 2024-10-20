@@ -311,45 +311,11 @@
 #       run: echo docker run -d -p 8080:80 $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
 ################################################## 11- workflow_dispatch  ##################################################
 
-name: workflow_dispatch
+# name: workflow_dispatch
 
-# on: push
-on: 
-  workflow_dispatch
-
-env:
-    CONTAINER_REGISTERY: docker.io
-    IMAGE_NAME: github-actions
-
-jobs:
-  docker:
-    runs-on: ubuntu-latest
-    steps:
-    - name: docker build 
-      run: echo docker build -t ${{ env.CONTAINER_REGISTERY }}/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
-
-    - name: docker login
-      # env:
-      #   DOCKER_PASSWORD: 
-      run: echo docker login --username=$${{ vars.DOCKER_USERNAME }} --pasword=${{ secrets.DOCKER_PASSWORD}}
-
-    - name: docker publish
-      run: echo docker push $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
-
-  deploy:
-    needs: docker
-    runs-on: ubuntu-latest
-    steps:
-
-    - name: docker run
-      run: echo docker run -d -p 8080:80 $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
-
-
-################################################## 04- Job concurrency  ##################################################
-
-# name: Job concurrency
-
-# on: push
+# # on: push
+# on: 
+#   workflow_dispatch
 
 # env:
 #     CONTAINER_REGISTERY: docker.io
@@ -372,16 +338,50 @@ jobs:
 
 #   deploy:
 #     needs: docker
-#     concurrency:
-#       group: production-deployment
-#       cancel-in-progress: true  ## dah el default , momken a5leeha false 
 #     runs-on: ubuntu-latest
 #     steps:
 
 #     - name: docker run
-#       run: | 
-#         echo docker run -d -p 8080:80 $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
-#         sleep 600
+#       run: echo docker run -d -p 8080:80 $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+
+
+################################################## 12- Job concurrency  ##################################################
+
+name: Job concurrency
+
+on: push
+
+env:
+    CONTAINER_REGISTERY: docker.io
+    IMAGE_NAME: github-actions
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+    - name: docker build 
+      run: echo docker build -t ${{ env.CONTAINER_REGISTERY }}/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+
+    - name: docker login
+      # env:
+      #   DOCKER_PASSWORD: 
+      run: echo docker login --username=$${{ vars.DOCKER_USERNAME }} --pasword=${{ secrets.DOCKER_PASSWORD}}
+
+    - name: docker publish
+      run: echo docker push $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+
+  deploy:
+    needs: docker
+    concurrency:
+      group: production-deployment
+      cancel-in-progress: true  ## dah el default , momken a5leeha false 
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: docker run
+      run: | 
+        echo docker run -d -p 8080:80 $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+        sleep 600
 
 ################################################## 04- Job concurrency false and timeout-minutes 1min ##################################################
 
