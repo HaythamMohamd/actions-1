@@ -185,93 +185,93 @@
 #       run: echo "deploying"
 
 ################################################## 08 cosway with needs then uplaod and download ##################################################
-name: 08 cosway with needs then uplaod and download
-
-on: push
-
-jobs:
-  build_job_1:
-    runs-on: ubuntu-latest
-    steps:
-    - name: install cosway
-      run: sudo apt-get install cowsay -y
-
-    - name: generate ASCII artwork
-      run: cowsay -f dragon "Run for cover, I am a dragon ... RARW" >> dragon.txt
-
-    - name: read file
-      run: cat dragon.txt
-
-    - name: upload the dragon.tx file to be downloaded after that from other jobs
-      uses: actions/upload-artifact@v4
-      with:
-        name: dragon-text-file
-        path: dragon.txt
-
-    - name: sleep for 10 sec
-      run: sleep 10
-
-  test_job_2:
-    needs: build_job_1
-    runs-on: ubuntu-latest
-    steps:
-
-    - name: sleep for 10 sec
-      run: sleep 10
-
-    - name: download  the dragon.tx file to cat it
-      uses: actions/download-artifact@v4
-      with:
-        name: dragon-text-file
-
-    - name: test file exists
-      run: grep -i "dragon" dragon.txt
-
-  deploy_job_3:
-    needs: [build_job_1, test_job_2]
-    runs-on: ubuntu-latest
-    steps:
-    - name: download  the dragon.tx file to cat it
-      uses: actions/download-artifact@v4
-      with:
-        name: dragon-text-file
-
-    - name: read file
-      run: cat dragon.txt
-
-
-################################################## 03- variables and secres ##################################################
-
-# name: Exploring variables and secrets
+# name: 08 cosway with needs then uplaod and download
 
 # on: push
 
-# env:
-#     CONTAINER_REGISTERY: docker.io
-#     IMAGE_NAME: github-actions
-
 # jobs:
-#   docker:
+#   build_job_1:
 #     runs-on: ubuntu-latest
 #     steps:
-#     - name: docker build 
-#       run: echo docker build -t ${{ env.CONTAINER_REGISTERY }}/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+#     - name: install cosway
+#       run: sudo apt-get install cowsay -y
 
-#     - name: docker login
-#       # env:
-#       #   DOCKER_PASSWORD: 
-#       run: echo docker login --username=$${{ vars.DOCKER_USERNAME }} --pasword=${{ secrets.DOCKER_PASSWORD}}
+#     - name: generate ASCII artwork
+#       run: cowsay -f dragon "Run for cover, I am a dragon ... RARW" >> dragon.txt
 
-#     - name: docker publish
-#       run: echo docker push $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+#     - name: read file
+#       run: cat dragon.txt
 
-#   deploy:
-#     needs: docker
+#     - name: upload the dragon.tx file to be downloaded after that from other jobs
+#       uses: actions/upload-artifact@v4
+#       with:
+#         name: dragon-text-file
+#         path: dragon.txt
+
+#     - name: sleep for 10 sec
+#       run: sleep 10
+
+#   test_job_2:
+#     needs: build_job_1
 #     runs-on: ubuntu-latest
 #     steps:
 
-#     - name: docker run
-#       run: echo docker run -d -p 8080:80 $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+#     - name: sleep for 10 sec
+#       run: sleep 10
+
+#     - name: download  the dragon.tx file to cat it
+#       uses: actions/download-artifact@v4
+#       with:
+#         name: dragon-text-file
+
+#     - name: test file exists
+#       run: grep -i "dragon" dragon.txt
+
+#   deploy_job_3:
+#     needs: [build_job_1, test_job_2]
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: download  the dragon.tx file to cat it
+#       uses: actions/download-artifact@v4
+#       with:
+#         name: dragon-text-file
+
+#     - name: read file
+#       run: cat dragon.txt
+
+
+################################################## 09 variables and secres ##################################################
+
+name: Exploring variables and secrets
+
+on: push
+
+env:
+    CONTAINER_REGISTERY: docker.io
+    IMAGE_NAME: github-actions2010
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+    - name: docker build 
+      run: echo docker build -t ${{ env.CONTAINER_REGISTERY }}/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest  # DOCKER_USERNAME is created at repo
+
+    - name: docker login
+      # env:
+      #   DOCKER_PASSWORD: 
+      run: echo docker login --username=$${{ vars.DOCKER_USERNAME }} --pasword=${{ secrets.DOCKER_PASSWORD}} # DOCKER_PASSWORD is created at repo
+
+    - name: docker publish
+      run: echo docker push $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+
+  deploy:
+    needs: docker
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: docker run
+      run: echo docker run -d -p 8080:80 $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
 
 ################################################## 04- schedual , workflow_dispatch ##################################################
 
