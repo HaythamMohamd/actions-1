@@ -290,76 +290,69 @@
 
 # ################################################## 10- schedual  ##################################################
 
-name: Docker Build and Deploy (Scheduled)
+# name: Using Schedule
 
-on: 
-  schedule:
-    - cron: "*/1 * * * *"  # every 1 minute
-
-env:
-  CONTAINER_REGISTRY: docker.io
-  IMAGE_NAME: github-actions
-
-jobs:
-  docker:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-
-      - name: Docker build
-        run: |
-          docker build -t $CONTAINER_REGISTRY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest .
-
-      - name: Docker login
-        run: |
-          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login $CONTAINER_REGISTRY -u "${{ vars.DOCKER_USERNAME }}" --password-stdin
-
-      - name: Docker push
-        run: |
-          docker push $CONTAINER_REGISTRY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
-
-  deploy:
-    needs: docker
-    runs-on: ubuntu-latest
-    steps:
-      - name: Run Docker container
-        run: |
-          docker run -d -p 8080:80 $CONTAINER_REGISTRY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME_
-################################################## 11- workflow_dispatch  ##################################################
-
-# name: workflow_dispatch
-
-# # on: push
 # on: 
-#   workflow_dispatch
+#   schedule:
+#     - cron: "*/1 * * * *"  # every 1 minute
 
 # env:
-#     CONTAINER_REGISTERY: docker.io
-#     IMAGE_NAME: github-actions
+#   CONTAINER_REGISTRY: docker.io
+#   IMAGE_NAME: github-actions
 
 # jobs:
 #   docker:
 #     runs-on: ubuntu-latest
 #     steps:
-#     - name: docker build 
-#       run: echo docker build -t ${{ env.CONTAINER_REGISTERY }}/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+#       - name: Docker build
+#         run: echo docker build -t $CONTAINER_REGISTRY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest .
 
-#     - name: docker login
-#       # env:
-#       #   DOCKER_PASSWORD: 
-#       run: echo docker login --username=$${{ vars.DOCKER_USERNAME }} --pasword=${{ secrets.DOCKER_PASSWORD}}
+#       - name: Docker login
+#         run: echo docker login --username ${{ vars.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }}
 
-#     - name: docker publish
-#       run: echo docker push $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+#       - name: Docker publish
+#         run: echo docker push $CONTAINER_REGISTRY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
 
 #   deploy:
 #     needs: docker
 #     runs-on: ubuntu-latest
 #     steps:
+#       - name: Docker run
+#         run: echo docker run -d -p 8080:80 $CONTAINER_REGISTRY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+################################################## 11- workflow_dispatch  ##################################################
 
-#     - name: docker run
-#       run: echo docker run -d -p 8080:80 $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+name: workflow_dispatch
+
+# on: push
+on: 
+  workflow_dispatch
+
+env:
+    CONTAINER_REGISTERY: docker.io
+    IMAGE_NAME: github-actions
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+    - name: docker build 
+      run: echo docker build -t ${{ env.CONTAINER_REGISTERY }}/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+
+    - name: docker login
+      # env:
+      #   DOCKER_PASSWORD: 
+      run: echo docker login --username=$${{ vars.DOCKER_USERNAME }} --pasword=${{ secrets.DOCKER_PASSWORD}}
+
+    - name: docker publish
+      run: echo docker push $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+
+  deploy:
+    needs: docker
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: docker run
+      run: echo docker run -d -p 8080:80 $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
 
 
 ################################################## 12- Job concurrency  ##################################################
