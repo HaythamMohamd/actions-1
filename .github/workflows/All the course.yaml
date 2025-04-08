@@ -575,8 +575,8 @@ name: Workflow Event Filters and Activity Types
 on: 
   push:
     branches:
-      - main
-      - '!feature/*'
+      - '!main'
+      - 'feature/*'
     
     # branches-ignore:
     #   - '!feature/*'
