@@ -69,32 +69,7 @@
 #       run: cowsay -f dargon "Run for cover, I am a dragon ... RARW" >> dragon.txt
 
 ################################################## 04 Workflow to Generate ASCII Artwork ##################################################
-# solution => install ascii
-
-name: my first workflow
-
-on: push
-
-jobs:
-  first_job:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout Repo
-      uses: actions/checkout@v4
-
-    - name: install cosway app
-      run: sudo apt-get install cowsay  -y
-
-    - name: generate ASCII artwork 
-      run: echo "5ali balak el dragon is here" >> dragon.txt
-    
-    - name: test files exists
-      run: cat dragon.txt | grep -i dragon
-    
-    - name: List Repo files
-      run: ls -ltra
-   
-################################################## 05 Executing Shell Scripts in Workflow ##################################################
+# solution => install cosway
 
 # name: my first workflow
 
@@ -106,14 +81,39 @@ jobs:
 #     steps:
 #     - name: Checkout Repo
 #       uses: actions/checkout@v4
+
+#     - name: install cosway app
+#       run: sudo apt-get install cowsay  -y
+
+#     - name: generate ASCII artwork 
+#       run: echo "5ali balak el dragon is here" >> dragon.txt
+    
+#     - name: test files exists
+#       run: cat dragon.txt | grep -i dragon
     
 #     - name: List Repo files
 #       run: ls -ltra
+   
+################################################## 05 Executing Shell Scripts in Workflow ##################################################
 
-#     - name: Executing shell script
-#       run: |
-#         chmod +x cowsay.sh
-#         ./cowsay.sh
+# name: my first workflow
+
+on: push
+
+jobs:
+  first_job:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v4
+    
+    - name: List Repo files
+      run: ls -ltra
+
+    - name: Executing shell script
+      run: |
+        chmod +x cowsay.sh
+        ./cowsay.sh
 
 ################################################## 06 Workflow with multiple Jobs ##################################################
 
