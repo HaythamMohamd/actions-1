@@ -1,4 +1,6 @@
-name: cosway with shell script
+################################################## 01 my first workflow ##################################################
+
+name: my first workflow
 
 on: push
 
@@ -8,28 +10,182 @@ jobs:
     steps:
     - name: welcome message
       run: echo "my first github actions job"
-    
-    - name: clone the repo
-      uses: actions/checkout@v4
 
     - name: list files
       run: ls
 
-    - name: executing the cowsay script
-      run: |
-        chmod +x cowsay.sh
-        ./cowsay.sh
-    - name: install cosway
-      run: sudo apt-get install cowsay -y
+    - name: read the file
+      run: cat README.md
 
-    - name: generate ASCII artwork
-      run: cowsay -f dargon "Run for cover, I am a dragon ... RARW" >> dragon.txt
+################################################## 02 use checkout action ##################################################
 
-    - name: read file
-      run: cat dragon.txt
+# name: my first workflow
 
-################################################## needs ##################################################
-# name: cosway with needs then uplaod and download
+# on: push
+
+# jobs:
+#   first_job:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: Checkout Repo
+#       uses: actions/checkout@v4
+
+#     - name: welcome message
+#       run: echo "my first github actions job"
+
+#     - name: list files
+#       run: ls
+
+#     - name: read the file
+#       run: cat README.md
+
+################################################## 03 Multi-Line commands and Executing Third Party Libraries ##################################################
+
+# name: my first workflow
+
+# on: push
+
+# jobs:
+#   first_job:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: Checkout Repo
+#       uses: actions/checkout@v4
+
+#     - name: list files and read files
+#       run:  |
+#         echo "my first github actions job"
+#         ls -lta
+#         cat README.md
+
+#     - name: generate ASCII artwork 
+#       run: cowsay -f dargon "Run for cover, I am a dragon ... RARW" >> dragon.txt
+
+################################################## 04 Workflow to Generate ASCII Artwork ##################################################
+
+# name: my first workflow
+
+# on: push
+
+# jobs:
+#   first_job:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: Checkout Repo
+#       uses: actions/checkout@v4
+
+#     - name: install cosway app
+#       run: sudo apt-get install cowsay  -y
+
+#     - name: generate ASCII artwork 
+#       run: echo "5ali balak el dragon is here" >> dragon.txt
+    
+#     - name: test files exists
+#       run: cat dragon.txt | grep -i dragon
+    
+#     - name: List Repo files
+#       run: ls -ltra
+   
+################################################## 05 Executing Shell Scripts in Workflow ##################################################
+
+# name: my first workflow
+
+# on: push
+
+# jobs:
+#   first_job:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: Checkout Repo
+#       uses: actions/checkout@v4
+    
+#     - name: List Repo files
+#       run: ls -ltra
+
+#     - name: Executing shell script
+#       run: |
+#         chmod +x cowsay.sh
+#         ./cowsay.sh
+
+################################################## 06 Workflow with multiple Jobs ##################################################
+
+# name: Workflow with multiple Jobs
+
+# on: push
+
+# jobs:
+#   build_job_1:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: install cosway
+#       run: sudo apt-get install cowsay -y
+
+#     - name: generate ASCII artwork
+#       run: cowsay -f dragon "Run for cover, I am a dragon ... RARW" >> dragon.txt
+
+#     - name: sleep for 30 sec
+#       run: sleep 30
+
+#   test_job_2:
+#     runs-on: ubuntu-latest
+#     steps:
+
+#     - name: sleep for 10 sec
+#       run: sleep 10
+
+#     - name: test file exists
+#       run: grep -i "dragon" dragon.txt
+
+#   deploy_job_3:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: read file
+#       run: cat dragon.txt
+
+#     - name: Deploy
+#       run: echo "deploying"
+
+################################################## 07 Workflow with multiple Jobs with needs ##################################################
+
+# name: Workflow with multiple Jobs
+
+# on: push
+
+# jobs:
+#   build_job_1:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: install cosway
+#       run: sudo apt-get install cowsay -y
+
+#     - name: generate ASCII artwork
+#       run: cowsay -f dragon "Run for cover, I am a dragon ... RARW" >> dragon.txt
+
+#     - name: sleep for 30 sec
+#       run: sleep 30
+
+#   test_job_2:
+#     needs: build_job_1
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: sleep for 10 sec
+#       run: sleep 10
+
+#     - name: test file exists
+#       run: grep -i "dragon" dragon.txt
+
+#   deploy_job_3:
+#     needs: test_job_2
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: read file
+#       run: cat dragon.txt
+
+#     - name: Deploy
+#       run: echo "deploying"
+
+################################################## 08 cosway with needs then uplaod and download ##################################################
+# name: 08 cosway with needs then uplaod and download
 
 # on: push
 
@@ -52,16 +208,16 @@ jobs:
 #         name: dragon-text-file
 #         path: dragon.txt
 
-#     - name: sleep for 30 sec
-#       run: sleep 30
+#     - name: sleep for 10 sec
+#       run: sleep 10
 
 #   test_job_2:
 #     needs: build_job_1
 #     runs-on: ubuntu-latest
 #     steps:
 
-#     - name: sleep for 30 sec
-#       run: sleep 30
+#     - name: sleep for 10 sec
+#       run: sleep 10
 
 #     - name: download  the dragon.tx file to cat it
 #       uses: actions/download-artifact@v4
@@ -84,12 +240,49 @@ jobs:
 #       run: cat dragon.txt
 
 
-################################################## 03- variables and secres ##################################################
+################################################## 09 variables and secres ##################################################
 
 # name: Exploring variables and secrets
 
 # on: push
 
+# # this is workflow variables
+# env:
+#     CONTAINER_REGISTERY: docker.io
+#     IMAGE_NAME: github-actions
+
+# jobs:
+#   docker:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: docker build 
+#       run: echo docker build -t ${{ env.CONTAINER_REGISTERY }}/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest  # DOCKER_USERNAME is created at repo
+
+#     - name: docker login
+#       # env:
+#       #   DOCKER_PASSWORD: 
+#       run: echo docker login --username=$${{ vars.DOCKER_USERNAME }} --pasword=${{ secrets.DOCKER_PASSWORD}} # DOCKER_PASSWORD is created at repo
+
+#     - name: docker publish
+#       run: echo docker push $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+
+#   deploy:
+#     needs: docker
+#     runs-on: ubuntu-latest
+#     steps:
+
+#     - name: docker run
+#       run: echo docker run -d -p 8080:80 $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+
+# ################################################## 10- schedual  ##################################################
+
+# name: usign schedual 
+
+# # on: push
+# on: 
+#   schedule:
+#     - cron: "*/1 * * * *" ## ever 1 min
+
 # env:
 #     CONTAINER_REGISTERY: docker.io
 #     IMAGE_NAME: github-actions
@@ -116,16 +309,13 @@ jobs:
 
 #     - name: docker run
 #       run: echo docker run -d -p 8080:80 $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+################################################## 11- workflow_dispatch  ##################################################
 
-################################################## 04- schedual , workflow_dispatch ##################################################
-
-# name: Exploring variables and secrets
+# name: workflow_dispatch
 
 # # on: push
 # on: 
 #   workflow_dispatch
-#   # schedule:
-#   #   - cron: "*/1 * * * *" ## ever 1 min
 
 # env:
 #     CONTAINER_REGISTERY: docker.io
@@ -154,7 +344,8 @@ jobs:
 #     - name: docker run
 #       run: echo docker run -d -p 8080:80 $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
 
-################################################## 04- Job concurrency  ##################################################
+
+################################################## 12- Job concurrency  ##################################################
 
 # name: Job concurrency
 
@@ -192,9 +383,9 @@ jobs:
 #         echo docker run -d -p 8080:80 $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
 #         sleep 600
 
-################################################## 04- Job concurrency false and timeout-minutes 1min ##################################################
+################################################## 13- Job concurrency false and timeout-minutes 1min ##################################################
 
-# name: Job concurrency
+# name: Job concurrency and timeout
 
 # on: push
 
@@ -231,9 +422,9 @@ jobs:
 #         echo docker run -d -p 8080:80 $CONTAINER_REGISTERY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
 #         sleep 6000
 
-################################################## 05- without Matrix config ##################################################
-
-# name: Matrix config
+################################################## 14- without Matrix config ##################################################
+# # with matrix you will repeat the code , we have two jobs will be run in parrallel 
+# name: without Matrix config
 
 # on: push
 # jobs:
@@ -255,7 +446,7 @@ jobs:
 #     - name: Run images
 #       run: docker run hello-world
 
-################################################## 06- with Matrix config ##################################################
+################################################## 15- with Matrix config ##################################################
 
 # name: Matrix config
 
@@ -274,7 +465,7 @@ jobs:
 #     - name: Run images on ${{ matrix.os }}
 #       run: docker run ${{ matrix.images }}
 
-################################################## 07- with Matrix with include and exclude ##################################################
+################################################## 16- with Matrix with include and exclude ##################################################
 
 # name: Matrix config with include and exclude
 
@@ -301,7 +492,7 @@ jobs:
 #     - name: Run images on ${{ matrix.os }}
 #       run: docker run ${{ matrix.images }}
 
-################################################## 08- gitub_job_steps_runner_secrets context ##################################################
+################################################## 17- gitub_job_steps_runner_secrets context ##################################################
 
 # name: Context of gitub_job_steps_runner_secrets 
 
@@ -332,7 +523,7 @@ jobs:
 #         SECRETS_CONTEXT: ${{ toJson(secrets) }}
 #       run: echo "$SECRETS_CONTEXT"
 
-################################################## 09- if expression ##################################################
+################################################## 18- if expression ##################################################
 
 # name: if expression in deploy job
 
@@ -369,7 +560,7 @@ jobs:
 
 ################################################## 10- Workflow Event Filters and Activity Types  ##################################################
 
-# name: Workflow Event Filters and Activity Types
+# name: Workflow Event Filters and Activity Types 
 
 # on: 
 #   push:
