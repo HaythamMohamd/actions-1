@@ -1,23 +1,7 @@
 ################################################## 01 my first workflow ##################################################
-
-name: my first workflow
-
-on: push
-
-jobs:
-  first_job:
-    runs-on: ubuntu-latest
-    steps:
-    - name: welcome message
-      run: echo "my first github actions job"
-
-    - name: list files
-      run: ls
-
-    - name: read the file
-      run: cat README.md
-
-################################################## 02 use checkout action ##################################################
+# this will be failed Run cat README.md
+# cat: README.md: No such file or directory
+# Error: Process completed with exit code 1.
 
 # name: my first workflow
 
@@ -27,9 +11,6 @@ jobs:
 #   first_job:
 #     runs-on: ubuntu-latest
 #     steps:
-#     - name: Checkout Repo
-#       uses: actions/checkout@v4
-
 #     - name: welcome message
 #       run: echo "my first github actions job"
 
@@ -38,6 +19,28 @@ jobs:
 
 #     - name: read the file
 #       run: cat README.md
+
+################################################## 02 use checkout action ##################################################
+
+name: my first workflow
+
+on: push
+
+jobs:
+  first_job:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v4
+
+    - name: welcome message
+      run: echo "my first github actions job"
+
+    - name: list files
+      run: ls
+
+    - name: read the file
+      run: cat README.md
 
 ################################################## 03 Multi-Line commands and Executing Third Party Libraries ##################################################
 
