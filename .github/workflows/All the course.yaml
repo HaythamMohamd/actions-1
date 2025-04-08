@@ -43,28 +43,10 @@
 #       run: cat README.md
 
 ################################################## 03 Multi-Line commands and Executing Third Party Libraries ##################################################
-
-name: my first workflow
-
-on: push
-
-jobs:
-  first_job:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout Repo
-      uses: actions/checkout@v4
-
-    - name: list files and read files
-      run:  |
-        echo "my first github actions job"
-        ls -lta
-        cat README.md
-
-    - name: generate ASCII artwork 
-      run: cowsay -f dargon "Run for cover, I am a dragon ... RARW" >> dragon.txt
-
-################################################## 04 Workflow to Generate ASCII Artwork ##################################################
+# will be in error
+# Run cowsay -f dargon "Run for cover, I am a dragon ... RARW" >> dragon.txt
+# /home/runner/work/_temp/fa4cdd65-01e0-4b47-9ca6-c2d243416cf0.sh: line 1: cowsay: command not found
+# Error: Process completed with exit code 127.
 
 # name: my first workflow
 
@@ -77,17 +59,40 @@ jobs:
 #     - name: Checkout Repo
 #       uses: actions/checkout@v4
 
-#     - name: install cosway app
-#       run: sudo apt-get install cowsay  -y
+#     - name: list files and read files
+#       run:  |
+#         echo "my first github actions job"
+#         ls -lta
+#         cat README.md
 
 #     - name: generate ASCII artwork 
-#       run: echo "5ali balak el dragon is here" >> dragon.txt
+#       run: cowsay -f dargon "Run for cover, I am a dragon ... RARW" >> dragon.txt
+
+################################################## 04 Workflow to Generate ASCII Artwork ##################################################
+# solution => install ascii
+
+name: my first workflow
+
+on: push
+
+jobs:
+  first_job:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v4
+
+    - name: install cosway app
+      run: sudo apt-get install cowsay  -y
+
+    - name: generate ASCII artwork 
+      run: echo "5ali balak el dragon is here" >> dragon.txt
     
-#     - name: test files exists
-#       run: cat dragon.txt | grep -i dragon
+    - name: test files exists
+      run: cat dragon.txt | grep -i dragon
     
-#     - name: List Repo files
-#       run: ls -ltra
+    - name: List Repo files
+      run: ls -ltra
    
 ################################################## 05 Executing Shell Scripts in Workflow ##################################################
 
